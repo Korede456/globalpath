@@ -3,4 +3,5 @@ my_env
 migrations
 db.sqlite3
 **/migrations/*
+!**/migrations/
 !**/migrations/__init__.py
