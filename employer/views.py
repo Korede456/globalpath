@@ -63,3 +63,5 @@ def dashboard(request):
         return render(request, "employer/dashboard.html")
     else:
         return HttpResponseForbidden("You do not have permission to access this page.")
+
+
