@@ -2,7 +2,7 @@ from django import forms
 from .models import Job
 
 
-class jobForm(forms.ModelForm):
+class JobForm(forms.ModelForm):
     class Meta:
         model = Job
         fields = ['title', 'job_type', 'company', 'company_awards_recongnitions',

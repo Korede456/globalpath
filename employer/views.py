@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView
 from .models import Job
 from django.utils.decorators import method_decorator
-
+from .forms import JobForm
 
 class SignupView(FormView):
     template_name = "employer/signup.html"  # Update the template to employer signup
@@ -72,6 +72,7 @@ def dashboard(request):
 @method_decorator(login_required, name='dispatch')
 class JobCreateView(CreateView):
     model = Job
+    form_class = JobForm
     template_name = 'template.html'
     template_name = 'employer/job_post_form.html'
     success_url = reverse_lazy('employer:dashboard')
