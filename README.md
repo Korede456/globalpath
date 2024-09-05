@@ -15,7 +15,7 @@ Before you begin, ensure you have the following installed:
 - npm (Node Package Manager)
 - Django
 
-## Setup Instructions
+### Setup Instructions
 
 ### 1. Clone the Repository
 
