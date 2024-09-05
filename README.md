@@ -1,6 +1,11 @@
-# GlobPath
+## GlobPath
 
 GlobPath is a job portal web application designed to connect job seekers with employers. The project is built using Django for the backend and Tailwind CSS for the frontend styling.
+
+## Contributors
+George Isreal
+Odeyemi Korede Thompson
+Daramola Victoria
 
 ## Prerequisites
 
@@ -10,7 +15,7 @@ Before you begin, ensure you have the following installed:
 - npm (Node Package Manager)
 - Django
 
-## Setup Instructions
+### Setup Instructions
 
 ### 1. Clone the Repository
 
