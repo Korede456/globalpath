@@ -7,6 +7,9 @@ from account.forms import EmployerSignupForm
 from account.models import CustomUser
 from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
+from django.views.generic import CreateView
+from .models import Job
+from django.utils.decorators import method_decorator
 
 
 class SignupView(FormView):
@@ -65,3 +68,18 @@ def dashboard(request):
         return HttpResponseForbidden("You do not have permission to access this page.")
 
 
+# Employer can create post
+@method_decorator(login_required, name='dispatch')
+class JobCreateView(CreateView):
+    model = Job
+    template_name = 'template.html'
+    template_name = 'employer/job_post_form.html'
+    success_url = reverse_lazy('employer:dashboard')
+
+
+    def form_valid(self, form):
+        if self.request.user.role == CustomUser.Role.EMPLOYER:
+            form.instance.user = self.request.user.employerprofile
+            return super().form_valid(form)
+        else:
+            return HttpResponseForbidden("You do not have permission to access this page.")
