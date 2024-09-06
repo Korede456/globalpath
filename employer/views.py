@@ -92,8 +92,8 @@ class DeleteJobs(DeleteView):
     model = Job
     template_name = 'employer/job_confirm_delete.html' 
     success_url = reverse_lazy('employer:dashboard')
-    
-    
+
+
     # this get_queryset() is part of Django builtIn Class based view(CBVs),
     # it is responsible for determining the set of objects that the view will wok with
     
