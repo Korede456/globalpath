@@ -5,7 +5,7 @@ from .models import Job
 class JobForm(forms.ModelForm):
     class Meta:
         model = Job
-        fields = ['title', 'job_type', 'company', 'company_awards_recongnitions',
+        fields = ['title', 'job_type', 'company', 'company_awards_recognitions',
                   'schedule', 'career_level', 'education_level', 'category',
                   'description']
         
@@ -13,7 +13,7 @@ class JobForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class':'form-control'}),
             'job_type': forms.Select(attrs={'class' : 'form-control'}),
             'company': forms.Select(attrs={'class' : 'form-control'}),
-            'company_awards_recongnitions': forms.Select(attrs={'class' : 'form-control'}),
+            'company_awards_recognitions': forms.Select(attrs={'class' : 'form-control'}),
             'schedule': forms.Select(attrs={'class' : 'form-control'}),
             'career_level': forms.Select(attrs={'class' : 'form-control'}),
             'education_level' : forms.TextInput(attrs={'class': 'form-control'}),

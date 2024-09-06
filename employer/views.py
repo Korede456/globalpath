@@ -1,5 +1,6 @@
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
+from django.db.models.query import QuerySet
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import FormView, View
@@ -7,7 +8,7 @@ from account.forms import EmployerSignupForm
 from account.models import CustomUser
 from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DeleteView
 from .models import Job
 from django.utils.decorators import method_decorator
 from .forms import JobForm
@@ -74,7 +75,7 @@ class JobCreateView(CreateView):
     model = Job
     form_class = JobForm
     template_name = 'template.html'
-    template_name = 'employer/job_post_form.html'
+    template_name = 'employer/job_post_form.html' # you should change this based on what you are creating .
     success_url = reverse_lazy('employer:dashboard')
 
 
@@ -84,3 +85,35 @@ class JobCreateView(CreateView):
             return super().form_valid(form)
         else:
             return HttpResponseForbidden("You do not have permission to access this page.")
+
+
+@method_decorator(login_required, name='dispatch')
+class DeleteJobs(DeleteView):
+    model = Job
+    template_name = 'employer/job_confirm_delete.html' 
+    success_url = reverse_lazy('employer:dashboard')
+    
+    
+    # this get_queryset() is part of Django builtIn Class based view(CBVs),
+    # it is responsible for determining the set of objects that the view will wok with
+    
+    """
+    down here, the objects if filltered before the view tries to act on it, if thw usr isn't auth.., they'll get a 404 error
+    """
+    def get_queryset(self):   
+        " Ensure that only the employer who posted the job can delete it "
+        query = super().get_queryset()
+        print(query) # for debugging
+        
+        if self.request.user.role == CustomUser.Role.EMPLOYER:
+            return query.filter(user=self.request.user.employerprofile)
+        else:
+            return Job.objects.none()
+        
+    def delete(self, request, *args, **kwargs):
+        """ custom delete method to handle permissions or other pre-deleted actions """
+        if self.request.user.role  != CustomUser.Role.EMPLOYER:
+            return HttpResponseForbidden("You do not have permission to access this page.")
+        else:
+            return super().delete(request, *args, **kwargs)
+        
