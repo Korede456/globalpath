@@ -8,10 +8,11 @@ from account.forms import EmployerSignupForm
 from account.models import CustomUser
 from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
+from .models import Job, Category
 from django.views.generic import CreateView, DeleteView
-from .models import Job
 from django.utils.decorators import method_decorator
 from .forms import JobForm
+from django.utils import timezone
 
 class SignupView(FormView):
     template_name = "employer/signup.html"  # Update the template to employer signup
@@ -58,34 +59,51 @@ class SignoutView(View):
 
 
 def employer_home(request):
+    # Check if the user is logged in
+    if request.user.is_authenticated:
+        # If the user is not an employer, redirect them to the jobseeker home page
+        if request.user.role != CustomUser.Role.EMPLOYER:
+            return redirect('jobseeker:home')
+
+    # Render the employer home page for non-logged-in users or employers
     return render(request, "employer/employer_home.html")
 
 
 @login_required
 def dashboard(request):
+    categories = Category.objects.all()
+
     if request.user.role == CustomUser.Role.EMPLOYER:
-        return render(request, "employer/dashboard.html")
+        # Fetch jobs posted by the logged-in employer
+        employer_profile = request.user.employerprofile
+        jobs = Job.objects.filter(company=employer_profile)
+        today = timezone.now().date()
+        
+        # Pass categories and jobs to the template context
+        return render(request, "employer/dashboard.html", {'categories': categories, 'jobs': jobs, 'today': today})
     else:
         return HttpResponseForbidden("You do not have permission to access this page.")
 
 
+
 # Employer can create post
 @method_decorator(login_required, name='dispatch')
-class JobCreateView(CreateView):
-    model = Job
+class JobCreateView(FormView):
+    template_name = 'employer/job_form.html'
     form_class = JobForm
-    template_name = 'template.html'
-    template_name = 'employer/job_post_form.html' # you should change this based on what you are creating .
-    success_url = reverse_lazy('employer:dashboard')
-
+    success_url = reverse_lazy('employer:dashboard')  # Where to redirect after form submission
 
     def form_valid(self, form):
+        # Ensure only employers can submit job posts
         if self.request.user.role == CustomUser.Role.EMPLOYER:
-            form.instance.user = self.request.user.employerprofile
-            return super().form_valid(form)
+            employer_profile = self.request.user.employerprofile
+            job = form.save(commit=False)  # Don't save the form yet
+            job.company = employer_profile  # Autofill the company field
+            job.save()  # Now save the form data with the company field
+            return redirect(self.get_success_url())  # Redirect to success URL
         else:
-            return HttpResponseForbidden("You do not have permission to access this page.")
 
+            return HttpResponseForbidden("You do not have permission to access this page.")
 
 @method_decorator(login_required, name='dispatch')
 class DeleteJobs(DeleteView):
@@ -116,4 +134,4 @@ class DeleteJobs(DeleteView):
             return HttpResponseForbidden("You do not have permission to access this page.")
         else:
             return super().delete(request, *args, **kwargs)
-        
+

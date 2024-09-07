@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GlobPath</title>
     <link href="{% static 'css/output.css' %}" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
   </head>
   <body class="h-full">
     <div class="bg-white">
@@ -16,7 +18,7 @@
           aria-label="Global"
         >
           <div class="flex lg:flex-1">
-            <a href="/" class="-m-1.5 p-1.5">
+            <a href="{% url 'employer:home' %}" class="-m-1.5 p-1.5">
               <span class="sr-only">GlobPath</span>
               <img
                 class="h-8 w-auto"
@@ -63,9 +65,6 @@
             >
           </div>
           <div class="hidden lg:flex lg:flex-1 lg:justify-end gap-5">
-            <a href="{% url 'jobseeker:home' %}" class="text-sm font-semibold leading-6 text-gray-900"
-              >I'm a job seeker</a
-            >
             {% if user.is_authenticated %}
             <!-- Dropdown Trigger -->
             <div class="relative">
@@ -97,6 +96,10 @@
               </div>
             </div>
             {% else %}
+            <!-- Jobseejer landing page Link -->
+            <a href="{% url 'jobseeker:home' %}" class="text-sm font-semibold leading-6 text-gray-900"
+              >I'm a job seeker</a
+            >
             <!-- Sign In Link -->
             <a
               id="signin-link"

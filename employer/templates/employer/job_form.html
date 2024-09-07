@@ -1,0 +1,140 @@
+<!-- Modal for New Job Post -->
+<div id="new-post-modal" class="hidden fixed -inset-6 z-50 flex items-start justify-center bg-black bg-opacity-50 max-h-screen overflow-y-auto">
+  <div class="bg-white p-8 rounded-lg shadow-lg w-11/12 max-w-md my-10 mx-auto">
+    <h2 class="text-2xl font-bold mb-6 text-center">Create New Job Post</h2>
+    
+    <!-- Error Handling -->
+    {% if form.errors %}
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+        <strong class="font-bold">There were some problems with your submission:</strong>
+        <ul class="mt-2">
+          {% for field in form %}
+            {% for error in field.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          {% endfor %}
+          {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  
+    <form action="{% url 'employer:post_job' %}" method="POST">
+      {% csrf_token %}
+      
+      <!-- Job Title -->
+      <div class="mb-4">
+        <label for="title" class="block text-gray-700">Job Title</label>
+        <input type="text" id="title" name="title" class="w-full p-2 border border-gray-300 rounded mt-1" required value="{{ form.title.value|default_if_none:'' }}">
+        <div class="text-red-500 text-sm mt-1">{{ form.title.errors }}</div>
+      </div>
+      
+      <!-- Job Type -->
+      <div class="mb-4">
+        <label for="job_type" class="block text-gray-700">Job Type</label>
+        <select id="job_type" name="job_type" class="w-full p-2 border border-gray-300 rounded mt-1" required>
+          <option value="REMOTE">Remote</option>
+          <option value="HYBRID">Hybrid</option>
+          <option value="ONSITE">Onsite</option>
+        </select>
+        <div class="text-red-500 text-sm mt-1">{{ form.job_type.errors }}</div>
+      </div>
+  
+      <!-- Company -->
+      <div class="mb-4">
+        <label for="company" class="block text-gray-700">Company</label>
+        <input type="text" id="company" name="company" class="w-full p-2 border border-gray-300 rounded mt-1" 
+               value="{{ user.employerprofile.company_name|default_if_none:'' }}" required>
+        <div class="text-red-500 text-sm mt-1">{{ form.company.errors }}</div>
+      </div>
+  
+      <!-- Company Awards & Recognitions -->
+      <div class="mb-4">
+        <label for="company_awards_recognitions" class="block text-gray-700">Company Awards &amp Recognitions</label>
+        <textarea id="company_awards_recognitions" name="company_awards_recognitions" rows="3" class="w-full p-2 border border-gray-300 rounded mt-1">{{ form.company_awards_recognitions.value|default_if_none:'' }}</textarea>
+        <div class="text-red-500 text-sm mt-1">{{ form.company_awards_recognitions.errors }}</div>
+      </div>
+  
+      <!-- Work Schedule -->
+      <div class="mb-4">
+        <label for="schedule" class="block text-gray-700">Work Schedule</label>
+        <select id="schedule" name="schedule" class="w-full p-2 border border-gray-300 rounded mt-1" required>
+          <option value="FULL_TIME">Full Time</option>
+          <option value="PART_TIME">Part Time</option>
+        </select>
+        <div class="text-red-500 text-sm mt-1">{{ form.schedule.errors }}</div>
+      </div>
+  
+      <!-- Career Level -->
+      <div class="mb-4">
+        <label for="career_level" class="block text-gray-700">Career Level</label>
+        <select id="career_level" name="career_level" class="w-full p-2 border border-gray-300 rounded mt-1" required>
+          <option value="ENTRY_LEVEL">Entry Level</option>
+          <option value="EXPERIENCED">Experienced</option>
+          <option value="PROFESSIONAL">Professional</option>
+          <option value="MANAGER">Manager</option>
+          <option value="SENIOR_MANAGER">Senior Level Manager</option>
+        </select>
+        <div class="text-red-500 text-sm mt-1">{{ form.career_level.errors }}</div>
+      </div>
+  
+      <!-- Education Level -->
+      <div class="mb-4">
+        <label for="education_level" class="block text-gray-700">Education Level</label>
+        <input type="text" id="education_level" name="education_level" class="w-full p-2 border border-gray-300 rounded mt-1" required value="{{ form.education_level.value|default_if_none:'' }}">
+        <div class="text-red-500 text-sm mt-1">{{ form.education_level.errors }}</div>
+      </div>
+  
+      <!-- Job Category with Filterable Search -->
+      <div class="mb-4">
+        <label for="category" class="block text-gray-700">Job Category</label>
+        <input type="text" id="category-search" placeholder="Search category..." class="w-full p-2 border border-gray-300 rounded mt-1">
+        <select id="category" name="category" class="w-full p-2 border border-gray-300 rounded mt-1" required>
+          {% for category in categories %}
+          <option value="{{ category.id }}">{{ category.name }}</option>
+          {% empty %}
+              <option disabled>No categories available</option>
+          {% endfor %}
+        </select>
+        <div class="text-red-500 text-sm mt-1">{{ form.category.errors }}</div>
+      </div>
+  
+      <!-- Job Description -->
+      <div class="mb-4">
+        <label for="description" class="block text-gray-700">Job Description</label>
+        <textarea id="description" name="description" rows="5" class="w-full p-2 border border-gray-300 rounded mt-1" required>{{ form.description.value|default_if_none:'' }}</textarea>
+        <div class="text-red-500 text-sm mt-1">{{ form.description.errors }}</div>
+      </div>
+  
+      <!-- Form Actions -->
+      <div class="flex justify-end">
+        <button type="button" id="close-modal-btn" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Cancel</button>
+        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-sky-500">Post Job</button>
+      </div>
+    </form>
+</div>
+</div>
+
+<!-- JavaScript for Category Filtering -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const categorySearch = document.getElementById('category-search');
+  const categorySelect = document.getElementById('category');
+
+  categorySearch.addEventListener('input', function() {
+    const filter = categorySearch.value.toLowerCase();
+    const options = categorySelect.options;
+
+    for (let i = 0; i < options.length; i++) {
+      const option = options[i];
+      const text = option.text.toLowerCase();
+      if (text.includes(filter)) {
+        option.style.display = '';
+      } else {
+        option.style.display = 'none';
+      }
+    }
+  });
+});
+</script>
