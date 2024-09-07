@@ -67,9 +67,6 @@
             >
           </div>
           <div class="hidden lg:flex lg:flex-1 lg:justify-end gap-5">
-            <a href="{% url 'jobseeker:home' %}" class="text-sm font-semibold leading-6 text-gray-900"
-              >I'm a job seeker</a
-            >
             {% if user.is_authenticated %}
             <!-- Dropdown Trigger -->
             <div class="relative">
@@ -101,6 +98,10 @@
               </div>
             </div>
             {% else %}
+            <!-- Recruiter landing page link-->
+            <a href="{% url 'employer:home' %}" class="text-sm font-semibold leading-6 text-gray-900"
+              >I'm a Recruiter</a
+            >
             <!-- Sign In Link -->
             <a
               id="signin-link"
