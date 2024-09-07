@@ -4,9 +4,9 @@ GlobPath is a job portal web application designed to connect job seekers with em
 
 ## Contributors
 
-- [Odeyemi Korede Thompson](mailto:koredethompson456@gmail.com) - [GitHub](https://github.com/korede456)
-- [George Isreal](mailto:omosgoerge@gmail.com) - [GitHub](https://github.com/hisreal123)
-- [Daramola Victoria](mailto:victoria.mnpadm@gmail.com) - [GitHub](https://github.com/oluwaseyifunmi12)
+- [Odeyemi Korede Thompson] - [Email](mailto:koredethompson456@gmail.com) - [GitHub](https://github.com/korede456)
+- [George Isreal] - [Email](mailto:omosgoerge@gmail.com) - [GitHub](https://github.com/hisreal123)
+- [Daramola Victoria] - [Email](mailto:victoria.mnpadm@gmail.com) - [GitHub](https://github.com/oluwaseyifunmi12)
 
 
 ## Prerequisites
