@@ -1,10 +1,9 @@
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import FormView, View
 from account.forms import EmployerSignupForm
-from django.shortcuts import get_object_or_404, redirect
 from account.models import CustomUser
 from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
@@ -76,7 +75,9 @@ def dashboard(request):
     if request.user.role == CustomUser.Role.EMPLOYER:
         # Fetch jobs posted by the logged-in employer
         employer = request.user
-        jobs = Job.objects.filter(posted_by=employer).order_by('-time_posted') # Order by latest
+        jobs = Job.objects.filter(posted_by=employer).order_by(
+            "-time_posted"
+        )  # Order by latest
         today = timezone.now().date()
 
         # Pass categories and jobs to the template context
@@ -123,33 +124,36 @@ def delete_job(request, job_id):
 
     if request.method == "POST":
         job.delete()
-        return redirect('employer:dashboard')  # Redirect to the dashboard after deletion
+        return redirect(
+            "employer:dashboard"
+        )  # Redirect to the dashboard after deletion
 
-    return render(request, 'employer/job_confirm_delete.html', {'job': job})
+    return render(request, "employer/job_confirm_delete.html", {"job": job})
 
 
 class JobEditView(View):
     form_class = JobForm
-    template_name = 'employer/job_form.html'
+    template_name = "employer/job_view.html"
 
     def get(self, request, *args, **kwargs):
-        job_id = kwargs.get('id')  # Get the job id from the URL
-        job = get_object_or_404(Job, id=job_id, posted_by=request.user.employerprofile)
+        job_id = kwargs.get("id")  # Get the job ID from the URL
+        job = get_object_or_404(Job, id=job_id, posted_by=request.user)
+
+        if request.user.role != CustomUser.Role.EMPLOYER:
+            return HttpResponseForbidden("You do not have permission to edit this job.")
 
         form = self.form_class(instance=job)
-        return render(request, self.template_name, {'form': form, 'job': job})
+        return render(request, self.template_name, {"form": form, "job": job})
 
     def post(self, request, *args, **kwargs):
-        job_id = kwargs.get('id')  # Get the job id from the URL
-        job = get_object_or_404(Job, id=job_id, posted_by=request.user.employerprofile)
+        job_id = kwargs.get("id")  # Get the job ID from the URL
+        job = get_object_or_404(Job, id=job_id, posted_by=request.user)
+
+        if request.user.role != CustomUser.Role.EMPLOYER:
+            return HttpResponseForbidden("You do not have permission to edit this job.")
 
         form = self.form_class(request.POST, instance=job)
-
         if form.is_valid():
-            if request.user.role == CustomUser.Role.EMPLOYER:
-                form.save()
-                return redirect(reverse_lazy('employer:dashboard'))
-            else:
-                return HttpResponseForbidden("You do not have permission to edit this job.")
-        else:
-            return render(request, self.template_name, {'form': form, 'job': job})
+            form.save()
+            return redirect(reverse_lazy("employer:dashboard"))
+        return render(request, self.template_name, {"form": form, "job": job})

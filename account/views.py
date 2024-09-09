@@ -5,7 +5,11 @@ from django.urls import reverse_lazy
 from django.views.generic import FormView, View
 from .forms import JobseekerSignupForm
 from .models import CustomUser
-
+from django.utils.decorators import method_decorator
+from django.http import HttpResponseForbidden
+from django.views import View
+from django.contrib.auth.decorators import login_required
+from employer.models import *
 
 class SignupView(FormView):
     template_name = "jobseeker/signup.html"
@@ -60,3 +64,19 @@ def home(request):
 
     # Render the jobseeker home page for non-logged-in users or jobseekers
     return render(request, "jobseeker/home.html")
+
+
+@method_decorator(login_required, name="dispatch")
+class JobListingsView( View):
+    template_name = 'get_jobs.html'
+
+    def get(self, request, *args, **kwargs):
+        # Check if the user is a jobseeker
+        if request.user.role == CustomUser.Role.JOBSEEKER:
+            # Fetch all available jobs, sorted from latest to oldest
+            jobs = Job.objects.all().order_by('-created_at')
+            
+            return render(request, self.template_name, {'jobs': jobs})
+        else:
+            # If the user is not a jobseeker, deny access
+            return HttpResponseForbidden('You do not have permission to view this page.')

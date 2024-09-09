@@ -89,6 +89,8 @@
                     Delete
                   </a>
                 </div>
+                <!-- The job view and edit template -->
+                {% include 'employer/job_view.html' %}
 
                 <!-- Delete Confirmation Modal -->
                 <div id="delete-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -117,8 +119,6 @@
 </div>
 <!-- The job post form template -->
 {% include 'employer/job_form.html' %}
-<!-- The job view and edit template -->
- {% include 'employer/job_view.html' %}
 </div>
     <!-- Sidebar for small screens (toggled by menu button) -->
     <div id="dash-mobile-menu" class="lg:hidden fixed inset-0 z-50 hidden">
@@ -207,4 +207,5 @@
     });
   });
 </script>
+
 {% endblock %}

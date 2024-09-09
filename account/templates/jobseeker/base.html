@@ -53,7 +53,7 @@
               {% if request.path == '/' %}text-blue-500 font-bold{% else %}text-gray-900{% endif %}"
               >Home</a
             >
-            <a href="#" class="text-sm font-semibold leading-6
+            <a href="{% url 'jobseeker:find-job'}" class="text-sm font-semibold leading-6
               {% if request.path == '/find-jobs/' %}text-blue-500 font-bold{% else %}text-gray-900{% endif %}"
               >Find jobs</a
             >
@@ -181,11 +181,6 @@
                   >
                 </div>
                 <div class="py-6 gap-5">
-                  <a
-                    href="{% url 'jobseeker:home' %}"
-                    class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                    >I'm a job seeker</a
-                  >
                   {% if user.is_authenticated %}
                   <div class="relative">
                     <button
@@ -214,6 +209,11 @@
                     </div>
                   </div>
                   {% else %}
+                  <a
+                    href="{% url 'employer:home' %}"
+                    class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    >I'm an employer</a
+                  >
                   <a
                     href="{% url 'employer:signin' %}"
                     class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
