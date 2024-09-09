@@ -56,7 +56,7 @@ def home(request):
     if request.user.is_authenticated:
         # If the user is not a jobseeker, redirect them to the employer home page
         if request.user.role != CustomUser.Role.JOBSEEKER:
-            return redirect('employer:home')
+            return redirect("employer:home")
 
     # Render the jobseeker home page for non-logged-in users or jobseekers
     return render(request, "jobseeker/home.html")
