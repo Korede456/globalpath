@@ -53,7 +53,7 @@
               {% if request.path == '/' %}text-blue-500 font-bold{% else %}text-gray-900{% endif %}"
               >Home</a
             >
-            <a href="{% url 'jobseeker:find-job'}" class="text-sm font-semibold leading-6
+            <a href="{% url 'jobseeker:find-job' %}" class="text-sm font-semibold leading-6
               {% if request.path == '/find-jobs/' %}text-blue-500 font-bold{% else %}text-gray-900{% endif %}"
               >Find jobs</a
             >
