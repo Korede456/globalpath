@@ -2,7 +2,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import FormView, View
+from django.views.generic import FormView, View, TemplateView
 from .forms import JobseekerSignupForm
 from .models import CustomUser
 
@@ -60,3 +60,9 @@ def home(request):
 
     # Render the jobseeker home page for non-logged-in users or jobseekers
     return render(request, "jobseeker/home.html")
+
+
+def about_us(request):
+    
+    # Render the jobseeker home page for non-logged-in users or jobseekers
+    return render(request, "jobseeker/about_us.html")
