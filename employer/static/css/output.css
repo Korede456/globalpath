@@ -624,6 +624,34 @@ video {
   inset: 0px;
 }
 
+.inset-10 {
+  inset: 2.5rem;
+}
+
+.inset-20 {
+  inset: 5rem;
+}
+
+.inset-6 {
+  inset: 1.5rem;
+}
+
+.inset-5 {
+  inset: 1.25rem;
+}
+
+.inset-1 {
+  inset: 0.25rem;
+}
+
+.-inset-10 {
+  inset: -2.5rem;
+}
+
+.-inset-20 {
+  inset: -5rem;
+}
+
 .inset-x-0 {
   left: 0px;
   right: 0px;
@@ -664,6 +692,10 @@ video {
 
 .top-\[calc\(100\%-13rem\)\] {
   top: calc(100% - 13rem);
+}
+
+.left-0 {
+  left: 0px;
 }
 
 .isolate {
@@ -1123,6 +1155,10 @@ video {
 
 .pb-4 {
   padding-bottom: 1rem;
+}
+
+.pt-20 {
+  padding-top: 5rem;
 }
 
 .text-center {
