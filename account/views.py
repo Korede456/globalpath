@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from employer.models import *
 from django.utils import timezone
 
+
 class SignupView(FormView):
     template_name = "jobseeker/signup.html"
     form_class = JobseekerSignupForm  # Use the specific Jobseeker form
@@ -25,7 +26,7 @@ class SignupView(FormView):
 class SigninView(FormView):
     template_name = "jobseeker/signin.html"
     form_class = AuthenticationForm
-    success_url = reverse_lazy("jobseeker:home")
+    success_url = reverse_lazy("jobseeker:find_job")
 
     def form_valid(self, form):
         email = form.cleaned_data.get("username")  # Using 'username' field for email
@@ -69,33 +70,33 @@ def home(request):
 
 @method_decorator(login_required, name="dispatch")
 class JobListingsView(View):
-    template_name = 'jobseeker/get_jobs.html'
+    template_name = "jobseeker/get_jobs.html"
 
     def get(self, request, *args, **kwargs):
         # Check if the user is a jobseeker
         if request.user.role == CustomUser.Role.JOBSEEKER:
             # Fetch all available jobs, sorted from latest to oldest
-            jobs = Job.objects.all().order_by('-time_posted')
+            jobs = Job.objects.all().order_by("-time_posted")
 
             # Handle search query
-            search_query = request.GET.get('search')
+            search_query = request.GET.get("search")
             if search_query:
                 jobs = jobs.filter(title__icontains=search_query)
 
             # Handle filters
-            job_type = request.GET.get('job_type')
+            job_type = request.GET.get("job_type")
             if job_type:
                 jobs = jobs.filter(job_type=job_type)
 
-            schedule = request.GET.get('schedule')
+            schedule = request.GET.get("schedule")
             if schedule:
                 jobs = jobs.filter(schedule=schedule)
 
-            career_level = request.GET.get('career_level')
+            career_level = request.GET.get("career_level")
             if career_level:
                 jobs = jobs.filter(career_level=career_level)
 
-            category = request.GET.get('category')
+            category = request.GET.get("category")
             if category:
                 jobs = jobs.filter(category__id=category)
 
@@ -106,11 +107,13 @@ class JobListingsView(View):
             today = timezone.now().date()
 
             # Render the template with jobs, categories, and today's date
-            return render(request, self.template_name, {
-                'jobs': jobs,
-                'categories': categories,
-                'today': today
-            })
+            return render(
+                request,
+                self.template_name,
+                {"jobs": jobs, "categories": categories, "today": today},
+            )
         else:
             # If the user is not a jobseeker, deny access
-            return HttpResponseForbidden('You do not have permission to view this page.')
+            return HttpResponseForbidden(
+                "You do not have permission to view this page."
+            )
