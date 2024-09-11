@@ -2,6 +2,9 @@ node_modules
 my_env
 migrations
 db.sqlite3
+media
+__pycache__/
+*.pyc
 **/migrations/*
 !**/migrations/
 !**/migrations/__init__.py
