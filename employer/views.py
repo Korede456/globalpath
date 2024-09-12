@@ -157,3 +157,8 @@ class JobEditView(View):
             form.save()
             return redirect(reverse_lazy("employer:dashboard"))
         return render(request, self.template_name, {"form": form, "job": job})
+
+def about_us(request):
+    
+    # Render the jobseeker home page for non-logged-in users or jobseekers
+    return render(request, "employer/about_us.html")

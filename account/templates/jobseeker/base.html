@@ -10,7 +10,7 @@
   </head>
   <body class="h-full">
     <div class="bg-white">
-      <header class="absolute inset-x-0 top-0 z-50">
+      <header class="absolute inset-x-0 top-0 z-50 bg-white">
         <nav
           class="flex items-center justify-between p-6 lg:px-8"
           aria-label="Global"
@@ -58,7 +58,7 @@
               >Find jobs</a
             >
             <a href="{% url 'jobseeker:about_us' %}" class="text-sm font-semibold leading-6
-              {% if request.path == '/about_us/' %}text-blue-500 font-bold{% else %}text-gray-900{% endif %}"
+              {% if request.path == '/jobseeker/about/' %}text-blue-500 font-bold{% else %}text-gray-900{% endif %}"
               >About Us</a
             >
             <a href="#" class="text-sm font-semibold leading-6
@@ -172,8 +172,9 @@
                     >Find Job</a
                   >
                   <a
-                    href="#"
-                    class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    href="{% url 'jobseeker:about_us' %}"
+                    class="-mx-3 block rounded-lg px-3 py-2 text-base leading-7 hover:bg-gray-50 
+                    {% if request.path == '/jobseeker/about/' %}text-blue-500 font-bold{% else %}text-gray-900 font-semibold{% endif %}"
                     >About Us</a
                   >
                   <a
