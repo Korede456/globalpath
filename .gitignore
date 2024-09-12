@@ -3,7 +3,7 @@ my_env
 migrations
 db.sqlite3
 media
-__pycache__/
+**__pycache__/
 *.pyc
 **/migrations/*
 !**/migrations/
