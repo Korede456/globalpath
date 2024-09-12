@@ -1,0 +1,119 @@
+<!-- Modal Structure (View and Edit) -->
+<div id="job-modal-{{ job.id }}"
+class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center z-50 max-h-screen overflow-y-auto">
+  <div class="bg-white rounded-lg w-1/2 p-6">
+      <div class="flex justify-between items-center">
+          <h2 class="text-xl font-bold">Job Details</h2>
+          <button class="text-indigo-600 hover:text-indigo-800" id="edit-button-{{ job.id }}">
+              Edit
+          </button>
+      </div>
+
+      <!-- Form displaying job details in read-only mode initially -->
+      <form id="job-form-{{ job.id }}" action="{% url 'employer:job_edit' job.id %}" method="POST">
+          {% csrf_token %}
+          <div class="mt-4">
+              <!-- Title -->
+              <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
+              <input id="title" name="title" type="text" class="form-control block w-full px-3 py-2 border border-gray-300 rounded-md" value="{{ job.title }}" readonly>
+
+              <!-- Job Type -->
+              <label for="job_type" class="block mt-4 text-sm font-medium text-gray-700">Job Type</label>
+              <select id="job_type" name="job_type" class="form-control block w-full px-3 py-2 border border-gray-300 rounded-md" disabled>
+                  <option value="{{ job.job_type }}" selected>{{ job.get_job_type_display }}</option>
+                  <option value="REMOTE">Remote</option>
+                    <option value="HYBRID">Hybrid</option>
+                    <option value="ONSITE">Onsite</option>
+                  <!-- Populate with other job types if needed -->
+              </select>
+
+              <!-- Company Awards & Recognitions -->
+              <label for="company_awards_recognitions" class="block mt-4 text-sm font-medium text-gray-700">Company Awards & Recognitions</label>
+              <input id="company_awards_recognitions" name="company_awards_recognitions" type="text" class="form-control block w-full px-3 py-2 border border-gray-300 rounded-md" value="{{ job.company_awards_recognitions }}" readonly>
+
+              <!-- Schedule -->
+              <label for="schedule" class="block mt-4 text-sm font-medium text-gray-700">Schedule</label>
+              <select id="schedule" name="schedule" class="form-control block w-full px-3 py-2 border border-gray-300 rounded-md" disabled>
+                  <option value="{{ job.schedule }}" selected>{{ job.get_schedule_display }}</option>
+                  <option value="FULL_TIME">Full Time</option>
+                    <option value="PART_TIME">Part Time</option>
+                  <!-- Populate with other schedule options if needed -->
+              </select>
+
+              <!-- Career Level -->
+              <label for="career_level" class="block mt-4 text-sm font-medium text-gray-700">Career Level</label>
+              <select id="career_level" name="career_level" class="form-control block w-full px-3 py-2 border border-gray-300 rounded-md" disabled>
+                  <option value="{{ job.career_level }}" selected>{{ job.get_career_level_display }}</option>
+                  <option value="ENTRY_LEVEL">Entry Level</option>
+                    <option value="EXPERIENCED">Experienced</option>
+                    <option value="PROFESSIONAL">Professional</option>
+                    <option value="MANAGER">Manager</option>
+                    <option value="SENIOR_MANAGER">Senior Level Manager</option>
+              </select>
+
+              <!-- Education Level -->
+              <label for="education_level" class="block mt-4 text-sm font-medium text-gray-700">Education Level</label>
+              <input id="education_level" name="education_level" type="text" class="form-control block w-full px-3 py-2 border border-gray-300 rounded-md" value="{{ job.education_level }}" readonly>
+
+              <!-- Category -->
+              <label for="category" class="block mt-4 text-sm font-medium text-gray-700">Category</label>
+              <select id="category" name="category" class="form-control block w-full px-3 py-2 border border-gray-300 rounded-md" disabled>
+                  <option value="{{ job.category.id }}" selected>{{ job.category.name }}</option>
+              </select>
+
+              <!-- Description -->
+              <label for="description" class="block mt-4 text-sm font-medium text-gray-700">Description</label>
+              <textarea id="description" name="description" rows="4" class="form-control block w-full px-3 py-2 border border-gray-300 rounded-md" readonly>{{ job.description }}</textarea>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="mt-6 text-right">
+              <button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md close-modal">Close</button>
+              <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hidden" id="save-button-{{ job.id }}">Save</button>
+          </div>
+      </form>
+  </div>
+</div>
+
+<script>
+  // Show the modal
+  document.querySelectorAll('.view-button').forEach(function(button) {
+      button.addEventListener('click', function() {
+          const jobId = button.getAttribute('data-job-id');
+          const modal = document.getElementById('job-modal-' + jobId);
+          modal.classList.remove('hidden');
+      });
+  });
+
+  // Close the modal
+  document.querySelectorAll('.close-modal').forEach(function(button) {
+      button.addEventListener('click', function() {
+          const modal = button.closest('.fixed');
+          modal.classList.add('hidden');
+      });
+  });
+
+  // Enable form editing and display the save button after confirmation
+  document.querySelectorAll('[id^="edit-button-"]').forEach(function(button) {
+      button.addEventListener('click', function() {
+          const jobId = button.id.split('-')[2];
+          const form = document.getElementById('job-form-' + jobId);
+          const inputs = form.querySelectorAll('input, textarea, select');
+          const saveButton = document.getElementById('save-button-' + jobId);
+
+          if (confirm("Are you sure you want to edit this post?")) {
+              // Enable form inputs
+              inputs.forEach(function(input) {
+                  input.removeAttribute('readonly');
+                  input.disabled = false;
+              });
+
+              // Show the save button
+              saveButton.classList.remove('hidden');
+
+              // Disable edit button after confirmation
+              button.disabled = true;
+          }
+      });
+  });
+</script>

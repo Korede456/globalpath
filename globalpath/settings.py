@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "account",
     "employer",
-    'django_select2',
+    "django_select2",
 ]
 
 MIDDLEWARE = [
