@@ -7,7 +7,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("account.urls")),
     path("member/employer/", include("employer.urls")),
-    path('select2/', include('django_select2.urls')),
+    path("select2/", include("django_select2.urls")),
 ]
 
 if settings.DEBUG:

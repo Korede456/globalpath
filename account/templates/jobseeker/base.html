@@ -53,8 +53,8 @@
               {% if request.path == '/' %}text-blue-500 font-bold{% else %}text-gray-900{% endif %}"
               >Home</a
             >
-            <a href="#" class="text-sm font-semibold leading-6
-              {% if request.path == '/find-jobs/' %}text-blue-500 font-bold{% else %}text-gray-900{% endif %}"
+            <a href="{% url 'jobseeker:find_job' %}" class="text-sm font-semibold leading-6
+              {% if request.path == '/jobseeker/find-jobs/' %}text-blue-500 font-bold{% else %}text-gray-900{% endif %}"
               >Find jobs</a
             >
             <a href="{% url 'jobseeker:about_us' %}" class="text-sm font-semibold leading-6
@@ -90,7 +90,7 @@
                   Account Detail
                 </a>
                 <a
-                  href="{% url 'employer:signout' %}"
+                  href="{% url 'jobseeker:signout' %}"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >
                   Sign Out
@@ -161,13 +161,15 @@
                 <div class="space-y-2 py-6">
                   <a
                     href="/"
-                    class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    class="-mx-3 block rounded-lg px-3 py-2 text-base leading-7 hover:bg-gray-50 
+                    {% if request.path == '/' %}text-blue-500 font-bold{% else %}text-gray-900 font-semibold{% endif %}"
                     >Home</a
                   >
                   <a
-                    href="#"
-                    class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                    >Dashboard</a
+                    href="{% url 'jobseeker:find_job' %}"
+                    class="-mx-3 block rounded-lg px-3 py-2 text-base leading-7 hover:bg-gray-50
+                    {% if request.path == '/jobseeker/find-jobs' %}text-blue-500 font-bold{% else %}text-gray-900 font-semibold{% endif %}"
+                    >Find Job</a
                   >
                   <a
                     href="#"
@@ -181,11 +183,6 @@
                   >
                 </div>
                 <div class="py-6 gap-5">
-                  <a
-                    href="{% url 'jobseeker:home' %}"
-                    class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                    >I'm a job seeker</a
-                  >
                   {% if user.is_authenticated %}
                   <div class="relative">
                     <button
@@ -206,7 +203,7 @@
                         Account Details
                       </a>
                       <a
-                        href="{% url 'employer:signout' %}"
+                        href="{% url 'jobseeker:signout' %}"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
                         Sign Out
@@ -215,7 +212,12 @@
                   </div>
                   {% else %}
                   <a
-                    href="{% url 'employer:signin' %}"
+                    href="{% url 'employer:home' %}"
+                    class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    >I'm an employer</a
+                  >
+                  <a
+                    href="{% url 'jobseeker:signin' %}"
                     class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   >
                     Sign In
