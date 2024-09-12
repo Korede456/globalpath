@@ -3,9 +3,11 @@
 GlobPath is a job portal web application designed to connect job seekers with employers. The project is built using Django for the backend and Tailwind CSS for the frontend styling.
 
 ## Contributors
-George Isreal
-Odeyemi Korede Thompson
-Daramola Victoria
+
+- [Odeyemi Korede Thompson] - [Email](mailto:koredethompson456@gmail.com) - [GitHub](https://github.com/korede456)
+- [George Isreal] - [Email](mailto:omosgoerge@gmail.com) - [GitHub](https://github.com/hisreal123)
+- [Daramola Victoria] - [Email](mailto:victoria.mnpadm@gmail.com) - [GitHub](https://github.com/oluwaseyifunmi12)
+
 
 ## Prerequisites
 
