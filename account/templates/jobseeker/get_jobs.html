@@ -67,25 +67,15 @@
       {% include './components/job_listing.html' %} {% comment %} inlcude the job_listing component {% endcomment %}
     </div>
 
-    <!-- Job Details on the Right -->
-   <div id="jobDetailsDesktop" class="hidden md:block lg:block ">
-    :: jobs clicked
-   </div>
+  <!--    desktop view-->
+  {% include './components/desktop_view.html' %}
   </div>
 </div>
 
 
 {% comment %} mobile listing {% endcomment %}
-<div id="jobDetailsMobile" class="fixed top-0 right-0 left-0 bg-white ">
-  <button
-    class="text-indigo-600 font-bold text-lg mb-4"
-    onclick="hideJobDetails()"
-  >
-    Back to Listings
-  </button>
-  <h2 class="text-2xl font-bold mb-4" id="jobTitleMobile"></h2>
-  <p id="jobDescriptionMobile"></p>
-</div>
+
+{% include './components/mobile_view.html' %}
 
 <script src="{% static 'account/js/main.js' %}"></script>
 {% endblock %}
