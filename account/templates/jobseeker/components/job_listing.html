@@ -1,0 +1,58 @@
+<ul class="space-y-4">
+  {% for job in jobs %}
+  <li
+    class="border border-yellow-50 shadow rounded-lg mb-3 cursor-pointer"
+    onclick="showJobDetails('{{ job.id }}')"
+  >
+    <div class="">
+      <div class="bg-white">
+        <div class="wrapper ">
+          <div
+            class="h-[40px] w-[40px] rounded-full border flex items-start justify-center"
+          >
+            <img
+              src="{{ job.logo|default:'../static/images/job2.png' }}"
+              alt="job logo"
+              height="30"
+              width="30"
+            />
+          </div>
+
+          <div class="relative w-full">
+            <h2 class="text-xl font-semibold text-gray-900">{{ job.title }}</h2>
+            <p class="text-xs">
+              <span class="text-gray-500">by </span>
+              <span class="font-semibold truncate"
+                >{{ job.company.company_name }}</span
+              >
+              <span class="text-gray-500">in</span>
+              <span class="text-green-900 font-semibold"
+                >{{ job.category }}</span
+              >
+            </p>
+
+            <div class="flex space-x-4 mt-4 justify-between">
+              <div>
+                <span class="py-1 px-2 bg-purple-100 rounded-full text-xs"
+                  >{{ job.job_type }}</span
+                >
+                <span class="py-1 px-2 bg-green-100 rounded-full text-xs"
+                  >{{ job.schedule }}</span
+                >
+              </div>
+                <span class="py-1 px-2 bg-green-100 rounded-full text-xs">
+                  {% if job.time_posted|date:"Y-m-d" == now|date:"Y-m-d" %}
+                    Today {{ job.time_posted|time:"H:i" }}
+                  {% else %}
+                    {{ job.time_posted|date:"M j" }}
+                  {% endif %}
+                </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </li>
+  {% empty %}
+  <li>No jobs available at the moment.</li>
+  {% endfor %}
+</ul>
