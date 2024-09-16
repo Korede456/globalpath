@@ -1,7 +1,7 @@
  <!-- Job Details on the Right -->
  <ul class="space-y-4">
   <li
-    class="each border shadow rounded-lg mb-3 cursor-pointer"
+    class="each border shadow rounded-lg mb-3 cursor-pointer hidden lg:block"
   >
     <div class=" ">
       <div class="">
@@ -18,29 +18,28 @@
           </div>
 
           <div class="relative w-full">
-            <h2 class="text-xl font-semibold text-gray-900">title</h2>
+            <h2 class="text-xl font-semibold text-gray-900" id="jobTitleMobile"></h2>
             <p class="text-xs">
-              <span class="text-gray-500">by </span>
+              <span class="text-gray-500"> </span>
               <span class="font-semibold truncate"
-                >Company name</span
+               id="jobCompany" ></span
               >
               <span class="text-gray-500">in</span>
-              <span class="text-green-900 font-semibold"
-                >Category</span
+              <span class="text-green-900 font-semibold" id="jobCategory"
+                ></span
               >
             </p>
 
             <div class="flex space-x-4 mt-4 justify-between">
               <div>
-                <span class="py-1 px-2 bg-purple-100 rounded-full text-xs"
-                  >type</span
+                <span id="jobType" class="py-1 px-2 bg-purple-100 rounded-full text-xs"
+                  ></span
                 >
                 <span class="py-1 px-2 bg-green-100 rounded-full text-xs"
-                  >schedule</span
+                  id="jobSchedule" ></span
                 >
               </div>
-                <span class="py-1 px-2 bg-green-100 rounded-full text-xs">
-                  time
+                <span id="job_time_posted" class="py-1 px-2 bg-green-100 rounded-full text-xs">
                 </span>
           </div>
         </div>
