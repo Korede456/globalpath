@@ -59,10 +59,14 @@ $(document).ready(function () {
 
         // desktop
         const jobTitleDesktop = $("#jobTitleDesktop").html(job.title)
+        const jobDescriptionDesktop = $("#jobDescriptionDesktop").html(
+          job.description
+        );
         const jobCompanyDesktop = $("#jobCompanyDesktop").html(job.company)
         const jobScheduleDesktop = $("#jobScheduleDesktop").html(job.schedule)
         const jobCategoryDesktop = $("#jobCategoryDesktop").html(job.category)
         const jobTypeDesktop = $("#jobTypeDesktop").html(job.job_type)
+        const jobCareer_level = $("#jobCareer_level").html(job.career_level);
         const job_time_posted_desktop = $("#job_time_posted_desktop").html(job.time_posted)
 
         // check the screen width, if the width is larger than 500px, it shows the desktop view
@@ -108,6 +112,10 @@ $(document).ready(function () {
 
   // Select the input element(s)
   var search_input = $("input[name='search']");
+
+  search_input.on('keydown', function () {
+    console.log(" Key down")
+   })
 
   // Add an event listener to the input(s)
   search_input.on("input", function () {
