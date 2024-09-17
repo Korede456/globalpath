@@ -47,7 +47,7 @@ $(document).ready(function () {
 
 
 
-    // this works for both mobile and desktop
+    // for mobile and desktop device
     function appendFetchdData(job) {
         const jobTitleMobile = $("#jobTitleMobile").html(job.title)
         const jobTitleDesc = $("#jobTitleDesc").html(job.description)
@@ -56,6 +56,14 @@ $(document).ready(function () {
         const jobCategory = $("#jobCategory").html(job.category)
         const jobType = $("#jobType").html(job.job_type)
         const job_time_posted = $("#job_time_posted").html(job.time_posted)
+
+        // desktop
+        const jobTitleDesktop = $("#jobTitleDesktop").html(job.title)
+        const jobCompanyDesktop = $("#jobCompanyDesktop").html(job.company)
+        const jobScheduleDesktop = $("#jobScheduleDesktop").html(job.schedule)
+        const jobCategoryDesktop = $("#jobCategoryDesktop").html(job.category)
+        const jobTypeDesktop = $("#jobTypeDesktop").html(job.job_type)
+        const job_time_posted_desktop = $("#job_time_posted_desktop").html(job.time_posted)
 
         // check the screen width, if the width is larger than 500px, it shows the desktop view
         if ($(window).width() > 1024) {
