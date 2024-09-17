@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from employer.models import *
 from django.utils import timezone
 from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404
 
 
 # custom is_ajax()
@@ -81,14 +82,16 @@ def about_us(request):
 
 @method_decorator(login_required, name="dispatch")
 class SingleJobView(View):
-    # template_name = "jobseeker/get_jobs.html"
     def get(self, request, id):
         try:
-            job = Job.objects.get(id=id)
+            # Retrieve the job or return 404
+            job = get_object_or_404(Job, id=id)
 
+            # Prepare job data for JSON response
             job_data = {
+                'id': job.id,
                 "title": job.title,
-                "company": job.company,
+                "company": job.company.company_name,  # Assuming company_name is a field of Company model
                 "description": job.description,
                 "job_type": job.get_job_type_display(),
                 "schedule": job.get_schedule_display(),
@@ -100,8 +103,7 @@ class SingleJobView(View):
 
             return JsonResponse({"job": job_data})
         except Job.DoesNotExist:
-            return JsonResponse({"message": "Job not found"})
-
+            return JsonResponse({"message": "Job not found"}, status=404)
 
 @method_decorator(login_required, name="dispatch")
 class JobListingsView(View):
@@ -153,6 +155,7 @@ class JobListingsView(View):
 
             for job in jobs:
                 jobs_data.append({
+                    'id': job.id,
                     "title": job.title,
                     "company": job.company,
                     "description": job.description,
