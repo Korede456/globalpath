@@ -1,0 +1,101 @@
+{% extends 'employer/base.html' %}
+
+{% block title %}
+GlobPath Landing Page
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+
+    <!-- Landing Section (Cover Image and Project Introduction) -->
+    <section class="relative h-screen bg-cover bg-center" style="background-image: url('{% static 'images/job2.jpg' %}');">
+        <div class="absolute inset-0 bg-black opacity-50"></div> 
+        <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
+            <h1 class="text-6xl font-bold">GlobPath</h1>
+            <p class="mt-4 text-xl">Your Gateway to Career Opportunities</p> 
+            <nav class="mt-6">
+                <a href="#features" class="px-4 py-2 mx-2 bg-blue-500 rounded hover:bg-blue-700">Features</a>
+                <a href="#about" class="px-4 py-2 mx-2 bg-blue-500 rounded hover:bg-blue-700">About Us</a>
+                <a href="https://project-url.com" class="px-4 py-2 mx-2 bg-green-500 rounded hover:bg-green-700">Explore the Site</a> 
+            </nav>
+        </div>
+    </section>
+
+    <!-- Feature Section -->
+    <section id="features" class="py-20 bg-gray-100">
+        <div class="container mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-12">Key Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <!-- Feature 1 -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <img src="{% static 'images/alg2.png' %}" alt="Matching Algorithm Image" class="w-full h-40 object-cover rounded-md mb-4">
+                    <h3 class="text-2xl font-semibold mb-2">Job Matching Algorithm</h3>
+                    <p>Our advanced algorithm matches job seekers with the most relevant positions, tailored to their skillset.</p>
+                </div>
+                <!-- Feature 2 -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <img src="{% static 'images/dashboard.jpg' %}" alt="Simple dashboard Image" class="w-full h-40 object-cover rounded-md mb-4">
+                    <h3 class="text-2xl font-semibold mb-2">User-Friendly Dashboard</h3>
+                    <p>Navigate through an intuitive dashboard to apply, track, and manage your job applications with ease.</p>
+                </div>
+                <!-- Feature 3 -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <img src="{% static 'images/time.png' %}" alt="Phone alarm Image" class="w-full h-40 object-cover rounded-md mb-4">
+                    <h3 class="text-2xl font-semibold mb-2">Real-Time Notifications</h3>
+                    <p>Receive instant alerts about new job postings, application updates, and interview opportunities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto">
+            <div class="flex justify-center mt-20"> 
+                <div class="text-center">
+                    <h1 class="text-2xl font-bold">About Us</h1>
+                    <p class="mt-4">Welcome to the About Us page of our website. Here you will find information about the organization.</p>
+                    <p class="mt-4">The inspiration for this job recommendation website stems from the growing issue of unemployment and the need to bridge the gap between job seekers and employers. In today's competitive market, many talented individuals struggle to find the right opportunities, and employers often face challenges in discovering the ideal candidates for their roles. This platform was created to address these challenges and help connect people with the jobs that best align with their skills, interests, and career aspirations.
+
+                        By leveraging advanced technology and data-driven matching, this project aims to simplify the job search process and empower users to discover meaningful career opportunities. For job seekers, the platform provides personalized job recommendations based on their profiles, while employers can find the most suitable candidates quickly and efficiently. The goal is to not only reduce the time and effort spent on job hunting but also to create a space where everyone, regardless of their background, can have access to the resources they need to succeed.
+                        
+                        This project was developed as part of a larger mission to make job searching easier, more effective, and accessible for everyone. It’s a practical response to the rising demand for better job-matching platforms and reflects the importance of helping individuals find their dream jobs, ultimately contributing to reducing unemployment rates. This project is part of our journey at Holberton School, blending practical education with real-world problem solving.</p>
+                   
+                        <!-- Meet the Team Section -->
+                    <div class="mt-10"> 
+                        <h2 class="text-3xl font-bold mb-8">Meet the Team</h2>
+                        
+                        
+                        <div class="flex justify-center flex-col space-y-6"> 
+                            <!-- Team Member 1 -->
+                            <div>
+                                <div class="text-lg font-semibold">1. <a href="https://www.linkedin.com/in/odeyemi-korede-858128279" class="text-blue-500 hover:underline">LinkedIn</a>
+                                | <a href="https://github.com/korede456" class="text-blue-500 hover:underline">GitHub</a>
+                                | <a href="https://twitter.com/boi_thompson456" class="text-blue-500 hover:underline">Twitter</a>
+                                </div>
+                            </div>
+                            <!-- Team Member 2 -->
+                            <div>
+                                <div class="text-lg font-semibold">2. <a href="https://www.linkedin.com/in/george-isreal-209651a7" class="text-blue-500 hover:underline">LinkedIn</a>
+                                | <a href="https://github.com/hisreal123" class="text-blue-500 hover:underline">GitHub</a>
+                                | <a href="https://twitter.com/member2" class="text-blue-500 hover:underline">Twitter</a>
+                                </div>
+                            </div>
+                            <!-- Team Member 3 -->
+                            <div>
+                                <div class="text-lg font-semibold">3. <a href="https://www.linkedin.com/in/team-member3" class="text-blue-500 hover:underline">LinkedIn</a>
+                                | <a href="https://github.com/oluwaseyifunmi12" class="text-blue-500 hover:underline">GitHub</a>
+                                | <a href="https://twitter.com/mumsmiracle" class="text-blue-500 hover:underline">Twitter</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="https://github.com/your-repository" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 mt-8 inline-block">View GitHub Repository</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

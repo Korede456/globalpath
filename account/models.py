@@ -108,7 +108,7 @@ class Jobseeker(CustomUser):
 # Signals to create profiles and add users to groups
 @receiver(post_save, sender=CustomUser)
 def create_user_profile(sender, instance, created, **kwargs):
-    if created:
+     if created:
         if instance.role == CustomUser.Role.EMPLOYER:
             EmployerProfile.objects.create(user=instance)
             group = Group.objects.get(name="Employers")

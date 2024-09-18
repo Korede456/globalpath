@@ -1,5 +1,6 @@
 <!-- Modal Structure (View and Edit) -->
-<div id="job-modal-{{ job.id }}" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center z-20">
+<div id="job-modal-{{ job.id }}"
+class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center z-50 max-h-screen overflow-y-auto">
   <div class="bg-white rounded-lg w-1/2 p-6">
       <div class="flex justify-between items-center">
           <h2 class="text-xl font-bold">Job Details</h2>
@@ -20,6 +21,9 @@
               <label for="job_type" class="block mt-4 text-sm font-medium text-gray-700">Job Type</label>
               <select id="job_type" name="job_type" class="form-control block w-full px-3 py-2 border border-gray-300 rounded-md" disabled>
                   <option value="{{ job.job_type }}" selected>{{ job.get_job_type_display }}</option>
+                  <option value="REMOTE">Remote</option>
+                    <option value="HYBRID">Hybrid</option>
+                    <option value="ONSITE">Onsite</option>
                   <!-- Populate with other job types if needed -->
               </select>
 
@@ -31,6 +35,8 @@
               <label for="schedule" class="block mt-4 text-sm font-medium text-gray-700">Schedule</label>
               <select id="schedule" name="schedule" class="form-control block w-full px-3 py-2 border border-gray-300 rounded-md" disabled>
                   <option value="{{ job.schedule }}" selected>{{ job.get_schedule_display }}</option>
+                  <option value="FULL_TIME">Full Time</option>
+                    <option value="PART_TIME">Part Time</option>
                   <!-- Populate with other schedule options if needed -->
               </select>
 
@@ -38,6 +44,11 @@
               <label for="career_level" class="block mt-4 text-sm font-medium text-gray-700">Career Level</label>
               <select id="career_level" name="career_level" class="form-control block w-full px-3 py-2 border border-gray-300 rounded-md" disabled>
                   <option value="{{ job.career_level }}" selected>{{ job.get_career_level_display }}</option>
+                  <option value="ENTRY_LEVEL">Entry Level</option>
+                    <option value="EXPERIENCED">Experienced</option>
+                    <option value="PROFESSIONAL">Professional</option>
+                    <option value="MANAGER">Manager</option>
+                    <option value="SENIOR_MANAGER">Senior Level Manager</option>
               </select>
 
               <!-- Education Level -->

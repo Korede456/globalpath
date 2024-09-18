@@ -136,7 +136,7 @@ class JobEditView(View):
     template_name = "employer/job_view.html"
 
     def get(self, request, *args, **kwargs):
-        job_id = kwargs.get("id")  # Get the job ID from the URL
+        job_id = kwargs.get("job_id")  # Get the job ID from the URL
         job = get_object_or_404(Job, id=job_id, posted_by=request.user)
 
         if request.user.role != CustomUser.Role.EMPLOYER:
@@ -146,7 +146,7 @@ class JobEditView(View):
         return render(request, self.template_name, {"form": form, "job": job})
 
     def post(self, request, *args, **kwargs):
-        job_id = kwargs.get("id")  # Get the job ID from the URL
+        job_id = kwargs.get("job_id")  # Get the job ID from the URL
         job = get_object_or_404(Job, id=job_id, posted_by=request.user)
 
         if request.user.role != CustomUser.Role.EMPLOYER:
@@ -157,3 +157,8 @@ class JobEditView(View):
             form.save()
             return redirect(reverse_lazy("employer:dashboard"))
         return render(request, self.template_name, {"form": form, "job": job})
+
+def about_us(request):
+    
+    # Render the jobseeker home page for non-logged-in users or jobseekers
+    return render(request, "employer/about_us.html")

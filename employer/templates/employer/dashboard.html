@@ -67,9 +67,9 @@
             <td class="py-2 px-4 text-center">{{ job.get_job_type_display }}</td> <!-- Displaying choice field label -->
             <td class="py-2 px-4 text-center">
               {% if job.time_posted.date == today %}
-                Today {{ job.time_posted|time:"H:i" }}
+                Today {{ job.time_posted|time:"h:i A" }}
               {% else %}
-                {{ job.time_posted|date:"M d, Y" }}
+                {{ job.time_posted|date:"d M h:i A" }}
               {% endif %}
             </td>
             <td class="py-2 px-4 text-center">
@@ -82,7 +82,7 @@
                 
                 <!-- Dropdown Menu -->
                 <div id="dropdown-menu-{{ job.id }}" class="hidden absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer view-button" data-job-id="{{ job.id }}">
+                  <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer view-button" data-job-id="{{ job.id }}">
                     View
                   </a>
                   <a class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 delete-button cursor-pointer" data-job-id="{{ job.id }}" data-delete-url="{% url 'employer:job_delete' job.id %}">
@@ -123,7 +123,7 @@
     <!-- Sidebar for small screens (toggled by menu button) -->
     <div id="dash-mobile-menu" class="lg:hidden fixed inset-0 z-50 hidden">
       <div class="fixed inset-0 bg-black opacity-50"></div>
-      <div class="fixed inset-y-0 right-0 w-64 bg-white p-4">
+      <div class="fixed inset-y-0 left-0 w-64 bg-white p-4">
         <button id="dash-close-menu" class="text-gray-500 hover:text-black mb-4">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -206,6 +206,34 @@
       }
     });
   });
+</script>
+
+<!-- Script to handle the side bar toggle on smaller screen -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+  // Get the menu toggle button, close button, and mobile menu element
+  const menuToggle = document.getElementById('dash-menu-toggle');
+  const mobileMenu = document.getElementById('dash-mobile-menu');
+  const closeMenuBtn = document.getElementById('dash-close-menu');
+
+  // Event listener to open the mobile menu
+  menuToggle.addEventListener('click', function () {
+    mobileMenu.classList.remove('hidden'); // Show the mobile menu
+  });
+
+  // Event listener to close the mobile menu
+  closeMenuBtn.addEventListener('click', function () {
+    mobileMenu.classList.add('hidden'); // Hide the mobile menu
+  });
+
+  // Optional: Close the menu if the user clicks outside of it
+  window.addEventListener('click', function (event) {
+    if (event.target == mobileMenu) {
+      mobileMenu.classList.add('hidden'); // Hide the mobile menu if clicking outside
+    }
+  });
+});
+
 </script>
 
 {% endblock %}
