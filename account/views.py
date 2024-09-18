@@ -11,12 +11,19 @@ from django.views import View
 from django.contrib.auth.decorators import login_required
 from employer.models import *
 from django.utils import timezone
+from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404
+
+
+# custom is_ajax()
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
 
 class SignupView(FormView):
     template_name = "jobseeker/signup.html"
     form_class = JobseekerSignupForm  # Use the specific Jobseeker form
-    success_url = reverse_lazy("jobseeker:get_job")
+    success_url = reverse_lazy("jobseeker:get_jobs")
 
     def form_valid(self, form):
         form.save()  # Save the jobseeker user
@@ -69,15 +76,40 @@ def home(request):
 
 
 def about_us(request):
-    
     # Render the jobseeker home page for non-logged-in users or jobseekers
     return render(request, "jobseeker/about_us.html")
+
+
+@method_decorator(login_required, name="dispatch")
+class SingleJobView(View):
+    def get(self, request, id):
+        try:
+            # Retrieve the job or return 404
+            job = get_object_or_404(Job, id=id)
+
+            # Prepare job data for JSON response
+            job_data = {
+                'id': job.id,
+                "title": job.title,
+                "company": job.company.company_name,  # Assuming company_name is a field of Company model
+                "description": job.description,
+                "job_type": job.get_job_type_display(),
+                "schedule": job.get_schedule_display(),
+                "career_level": job.get_career_level_display(),
+                "category": job.category.name,
+                "time_posted": job.time_posted.strftime('%Y-%m-%d %H:%M'),
+                "time_updated": job.time_updated.strftime('%Y-%m-%d %H:%M'),
+            }
+
+            return JsonResponse({"job": job_data})
+        except Job.DoesNotExist:
+            return JsonResponse({"message": "Job not found"}, status=404)
 
 @method_decorator(login_required, name="dispatch")
 class JobListingsView(View):
     template_name = "jobseeker/get_jobs.html"
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         # Check if the user is a jobseeker
         if request.user.role == CustomUser.Role.JOBSEEKER:
             # Fetch all available jobs, sorted from latest to oldest
@@ -112,10 +144,33 @@ class JobListingsView(View):
             today = timezone.now().date()
 
             # Render the template with jobs, categories, and today's date
+            # handle request 
+            if is_ajax(request):
+                jobs_list = list(
+                    jobs.values('id', 'title', 'company', 'job_type', 'schedule', 'career_level', 'category',
+                                'time_posted'))
+                return JsonResponse({"jobs": jobs_list}, safe=False)
+
+            jobs_data = []
+
+            for job in jobs:
+                jobs_data.append({
+                    'id': job.id,
+                    "title": job.title,
+                    "company": job.company,
+                    "description": job.description,
+                    "job_type": job.get_job_type_display(),
+                    "schedule": job.get_schedule_display(),
+                    "career_level": job.get_career_level_display(),
+                    "category": job.category.name,
+                    "time_posted": job.time_posted.strftime('%Y-%m-%d %H:%M'),
+                    "time_updated": job.time_updated.strftime('%Y-%m-%d %H:%M'),
+                })
+
             return render(
                 request,
                 self.template_name,
-                {"jobs": jobs, "categories": categories, "today": today},
+                {"jobs": jobs_data, "categories": categories, "today": today},
             )
         else:
             # If the user is not a jobseeker, deny access
