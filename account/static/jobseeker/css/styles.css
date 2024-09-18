@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+    /* containers  */
+    .container {
+        @apply md:w-[80%] mx-auto px-4
+    }
+    .wrapper {
+        @apply flex space-x-3 p-4
+    }
+}
