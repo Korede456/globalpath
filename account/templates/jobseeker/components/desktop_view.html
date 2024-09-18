@@ -1,0 +1,89 @@
+<!-- Job Details on the Right -->
+<ul class="space-y-4">
+  <li
+    class="each jobDetailsDesktop border shadow rounded-lg mb-3 cursor-pointer hidden"
+  >
+    <div class="">
+      <!--          top section -->
+      <div class="top bg-blue-600 px-6 py-5 text-white">
+        <div class="flex">
+          <div class="relative w-full">
+            <h2
+              class="text-xl font-semibold text-white"
+              id="jobTitleDesktop"
+            ></h2>
+            <p class="text-xs">
+              <span class="text-white/50"> </span>
+              <span
+                class="font-semibold truncate text-white/50"
+                id="jobCompanyDesktop"
+              ></span>
+              <span class="text-white/50">in</span>
+              <span
+                class="text-white/50 font-semibold"
+                id="jobCategoryDesktop"
+              ></span>
+            </p>
+          </div>
+
+          <div
+            class="h-[40px] w-[40px] rounded-full border flex items-start justify-center"
+          >
+            <img
+              src="{{ job.logo|default:'../static/images/job2.png' }}"
+              alt="job logo"
+              height="30"
+              width="30"
+            />
+          </div>
+        </div>
+
+        <button submit="" class=" bg-white/90 text-black/80 text-xs rounded-lg px-3 py-1 font-medium hover:shadow-md my-6 hover:bg-white/70"> APPLY NOW</button>
+      </div>
+
+      <div class="flex space-x-4 px-3 mt-8 w-[90%] mx-auto">
+
+        {% comment %} types {% endcomment %}
+        <div class="grid grid-cols-3">
+          <div class="flex flex-col items-start space-y-2">
+            <p class="text-sm font-bold ">Experience</p>
+            <p class=" text-gray-500 text-xs"> 4-6 Years </p>
+          </div>
+
+          <div class="flex flex-col items-start space-y-2">
+            <p class="text-sm font-bold ">Seniority Level</p>
+            <p class=" text-gray-500 text-xs" id="jobCareer_level"> </p>
+          </div>
+
+          <div class="flex flex-col items-start space-y-2">
+            <p class="text-sm font-bold ">Employment Type</p>
+            <p class=" text-gray-500 text-xs" id="jobScheduleDesktop"></p>
+          </div>
+
+
+          {% comment %} description {% endcomment %}
+          <div class="flex flex-col items-start space-y-2 mt-5 w-full relative">
+            <p class="text-md font-bold my-4">Job Description</p>
+            <p class=" text-gray-500 text-xs w-full" id="jobDescriptionDesktop"></p>
+          </div>
+        <div>
+
+        {% comment %} <div>
+          <span
+            id="jobTypeDesktop"
+            class="py-1 px-2 bg-purple-100 rounded-full text-xs"
+          ></span>
+          <span
+            class="py-1 px-2 bg-green-100 rounded-full text-xs"
+            id="jobScheduleDesktop"
+          ></span>
+        </div>
+        <span
+          id="job_time_posted_desktop"
+          class="py-1 px-2 bg-green-100 rounded-full text-xs"
+        >
+        </span> {% endcomment %}
+      </div>
+    </div>
+  </li>
+</ul>

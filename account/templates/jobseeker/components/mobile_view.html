@@ -1,0 +1,47 @@
+<div id="jobDetailsMobile" class="  z-50 hidden fixed min-h-screen top-0 right-0 bottom-0 left-0 bg-white lg:hidden">
+
+
+    <div class="px-3 relative mb-5">
+      <img id="jobDetailsMobileButton"
+           src="../../static/images/arrow.png"
+           alt="back-to-home"  height="20px"
+           width="20px" class="hide_button h-[15px] mx-3 mt-2 block cursor-pointer hover:scale-105 transition-all duration-70 delay-10"
+      />
+    </div>
+
+<!--  details section-->
+  <div class="JobDetailsSection px-4">
+    <div class="mb-5">
+
+      <div class="flex justify-between ">
+        <div>
+            <h2 class="text-2xl font-bold " id="jobTitleMobile">dd</h2>
+            <h4 class=" font-medium w-[75%]  text-lg text-gray-500"  id="jobCompany"></h4>
+        </div>
+         <div
+            class="h-[40px] w-[40px] rounded-full border flex items-start justify-center"
+          >
+            <img
+              src="{{ job.logo|default:'../static/images/job2.png' }}"
+              alt="job logo"
+              height="30"
+              width="30"
+            />
+          </div>
+      </div>
+        <p class="flex item-center text-gray-200 text-sm">
+            <span id="jobCountry" class="inline">Country</span> -
+            <span class="inline" id="jobSchedule"></span>
+        </p>
+
+        <p  id="job_time_posted" class="text-gray-400 text-sm "></p>
+    </div>
+
+    <button class=" shadow-md mt-4 rounded-full bg-black text-white px-3 py-1 hover:bg-black/60" type="submit"> Apply for this job</button>
+
+    <div class="description_section mt-6">
+      <p class="font-medium mb-4">Job description</p>
+      <p id="jobTitleDesc"></p>
+    </div>
+  </div>
+</div>
