@@ -6,34 +6,146 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GlobPath</title>
-    <link href="{% static 'css/output.css' %}" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32x32.jpg' %}">
+    <link href="{% static 'employer/css/output.css' %}" rel="stylesheet" />
   </head>
   <body class="h-full">
-    <div class="bg-white">
-      <header class="absolute inset-x-0 top-0 z-50 bg-white">
-        <nav
-          class="flex items-center justify-between p-6 lg:px-8"
-          aria-label="Global"
+    <header class="absolute inset-x-0 top-0 z-50 bg-indigo-600">
+      <nav
+        class="flex items-center justify-between p-6 lg:px-8"
+        aria-label="Global"
+      >
+        <div class="flex lg:flex-1">
+          <a href="/" class="-m-1.5">
+            <span class="sr-only">GlobPath</span>
+            <img
+              class="h-12 w-auto"
+              src="{% static 'images/globpath-removebg-preview.png' %}"
+              alt="globpath logo"
+            />
+          </a>
+        </div>
+        <div class="flex lg:hidden">
+          <button
+            id="open-menu"
+            type="button"
+            class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white"
+          >
+            <span class="sr-only">Open main menu</span>
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="hidden lg:flex lg:gap-x-12">
+          <a
+            href="{% url 'employer:home' %}"
+            class="text-sm text-white font-semibold leading-6 {% if request.path == '/' %}text-blue-500 font-bold{% else %}text-gray-900{% endif %}"
+            >Home</a
+          >
+          <a
+            href="{% url 'employer:dashboard' %}"
+            class="text-sm text-white font-semibold leading-6 {% if request.path == '/jobseeker/find-jobs/' %}text-blue-500 font-bold{% else %}text-gray-900{% endif %}"
+            >Dashboard</a
+          >
+          <a
+            href="{% url 'employer:about_us' %}"
+            class="text-sm text-white font-semibold leading-6 {% if request.path == '/about_us/' %}text-blue-500 font-bold{% else %}text-gray-900{% endif %}"
+            >About Us</a
+          >
+          <a
+            href="#"
+            class="text-sm text-white font-semibold leading-6 {% if request.path == '/blog/' %}text-blue-500 font-bold{% else %}text-gray-900{% endif %}"
+            >Blog</a
+          >
+        </div>
+        <div class="hidden lg:flex lg:flex-1 lg:justify-end gap-5">
+          {% if user.is_authenticated %}
+          <!-- Dropdown Trigger -->
+          <div class="relative">
+            <button
+              id="user-dropdown"
+              class="text-sm text-white font-semibold leading-6 focus:outline-none"
+            >
+              {{ user.first_name}} {{ user.last_name }}
+              <span aria-hidden="true">&darr;</span>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div
+              id="dropdown-menu"
+              class="absolute right-0 mt-2 w-40 rounded-md shadow-lg z-10 hidden bg-white"
+            >
+              <a
+                href="#"
+                class="block bg-grey-900 px-4 py-2 text-sm hover:bg-gray-100"
+              >
+                Account Detail
+              </a>
+              <a
+                href="{% url 'employer:signout' %}"
+                class="block px-4 py-2 text-sm bg-grey-900 hover:bg-gray-100"
+              >
+                Sign Out
+              </a>
+            </div>
+          </div>
+          {% else %}
+          <!-- Recruiter landing page link-->
+          <a
+            href="{% url 'jobseeker:home' %}"
+            class="text-sm font-semibold leading-6 text-white"
+            >I'm a jobseeker</a
+          >
+          <!-- Sign In Link -->
+          <a
+            id="signin-link"
+            href="{% url 'employer:signin' %}"
+            class="text-sm font-semibold leading-6 text-white"
+          >
+            Sign in <span aria-hidden="true">&rarr;</span>
+          </a>
+          {% endif %}
+        </div>
+      </nav>
+      <!-- Mobile menu, show/hide based on menu open state. -->
+      <div
+        id="menu-backdrop"
+        class="lg:hidden hidden"
+        role="dialog"
+        aria-modal="true"
+      >
+        <!-- Background backdrop, show/hide based on slide-over state. -->
+        <div class="fixed inset-0 z-50"></div>
+        <div
+          class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-indigo-600 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
         >
-          <div class="flex lg:flex-1">
-            <a href="{% url 'employer:home' %}" class="-m-1.5 p-1.5">
+          <div class="flex items-center justify-between">
+            <a href="/" class="-m-1.5 p-1.5">
               <span class="sr-only">GlobPath</span>
               <img
-                class="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                alt=""
-              />
+              class="h-12 w-auto"
+              src="{% static 'images/globpath-removebg-preview.png' %}"
+              alt="globpath logo"
+            />
             </a>
-          </div>
-          <div class="flex lg:hidden">
             <button
-              id="open-menu"
+              id="close-menu"
               type="button"
-              class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+              class="-m-2.5 rounded-md p-2.5 text-white"
             >
-              <span class="sr-only">Open main menu</span>
+              <span class="sr-only">Close menu</span>
               <svg
                 class="h-6 w-6"
                 fill="none"
@@ -45,194 +157,85 @@
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                  d="M6 18L18 6M6 6l12 12"
                 />
               </svg>
             </button>
           </div>
-          <div class="hidden lg:flex lg:gap-x-12">
-            <a href="{% url 'employer:home' %}" class="text-sm leading-6
-            {% if request.path == '/member/employer/home/' %}text-blue-500 font-bold{% else %}text-gray-900 font-semibold{% endif %}"
-              >Home</a
-            >
-            <a href="{% url 'employer:dashboard' %}" class="text-sm leading-6
-            {% if request.path == '/member/employer/dashboard/' %}text-blue-500 font-bold{% else %}text-gray-900 font-semibold{% endif %}"
-              >Dashboard</a
-            >
-            <a href="{% url 'employer:about_us' %}" class="text-sm font-semibold leading-6
-              {% if request.path == '/member/employer/about/' %}text-blue-500 font-bold{% else %}text-gray-900{% endif %}"
-              >About Us</a
-            >
-            <a href="#" class="text-sm font-semibold leading-6 text-gray-900"
-              >Blog</a
-            >
-          </div>
-          <div class="hidden lg:flex lg:flex-1 lg:justify-end gap-5">
-            {% if user.is_authenticated %}
-            <!-- Dropdown Trigger -->
-            <div class="relative">
-              <button
-                id="user-dropdown"
-                class="text-sm font-semibold leading-6 text-gray-900 focus:outline-none"
-              >
-                {{ user.first_name}} {{ user.last_name }}
-                <span aria-hidden="true">&darr;</span>
-              </button>
-
-              <!-- Dropdown Menu -->
-              <div
-                id="dropdown-menu"
-                class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10 hidden"
-              >
+          <div id="mobile-menu" class="mt-6 flow-root">
+            <div class="-my-6 divide-y divide-gray-500/10">
+              <div class="space-y-2 py-6">
+                <a
+                  href="{% url 'employer:home' %}"
+                  class="-mx-3 block rounded-lg px-3 py-2 text-white leading-7 hover:bg-gray-50 {% if request.path == '/' %}text-blue-500 font-bold{% else %}text-gray-900 font-semibold{% endif %}"
+                  >Home</a
+                >
+                <a
+                  href="{% url 'employer:dashboard' %}"
+                  class="-mx-3 block rounded-lg px-3 py-2 text-white leading-7 hover:bg-gray-50 {% if request.path == '/jobseeker/find-jobs' %}text-blue-500 font-bold{% else %}text-gray-900 font-semibold{% endif %}"
+                  >Dashboard</a
+                >
+                <a
+                  href="{% url 'employer:about_us' %}"
+                  class="-mx-3 block rounded-lg px-3 py-2 text-white font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >About Us</a
+                >
                 <a
                   href="#"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  class="-mx-3 block rounded-lg px-3 py-2 text-white font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >Blog</a
                 >
-                  Account Detail
-                </a>
-                <a
-                  href="{% url 'employer:signout' %}"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  Sign Out
-                </a>
               </div>
-            </div>
-            {% else %}
-            <!-- Jobseejer landing page Link -->
-            <a href="{% url 'jobseeker:home' %}" class="text-sm font-semibold leading-6 text-gray-900"
-              >I'm a job seeker</a
-            >
-            <!-- Sign In Link -->
-            <a
-              id="signin-link"
-              href="{% url 'employer:signin' %}"
-              class="text-sm font-semibold leading-6 text-gray-900"
-            >
-              Sign in <span aria-hidden="true">&rarr;</span>
-            </a>
-            {% endif %}
-          </div>
-        </nav>
-        <!-- Mobile menu, show/hide based on menu open state. -->
-        <div
-          id="menu-backdrop"
-          class="lg:hidden hidden"
-          role="dialog"
-          aria-modal="true"
-        >
-          <!-- Background backdrop, show/hide based on slide-over state. -->
-          <div class="fixed inset-0 z-50"></div>
-          <div
-            class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
-          >
-            <div class="flex items-center justify-between">
-              <a href="/" class="-m-1.5 p-1.5">
-                <span class="sr-only">GlobPath</span>
-                <img
-                  class="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                  alt=""
-                />
-              </a>
-              <button
-                id="close-menu"
-                type="button"
-                class="-m-2.5 rounded-md p-2.5 text-gray-700"
-              >
-                <span class="sr-only">Close menu</span>
-                <svg
-                  class="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div id="mobile-menu" class="mt-6 flow-root">
-              <div class="-my-6 divide-y divide-gray-500/10">
-                <div class="space-y-2 py-6">
-                  <a
-                    href="/"
-                    class="-mx-3 block rounded-lg px-3 py-2 text-base leading-7 hover:bg-gray-50
-                    {% if request.path == '/member/employer/home/' %}text-blue-500 font-bold{% else %}text-gray-900 font-semibold{% endif %}"
-                    >Home</a
+              <div class="py-6 gap-5">
+                {% if user.is_authenticated %}
+                <div class="relative">
+                  <button
+                    id="user-mobile-dropdown"
+                    class="-mx-3 block rounded-lg px-3 py-2 text-white font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   >
-                  <a
-                    href="{% url 'employer:dashboard' %}"
-                    class="-mx-3 block rounded-lg px-3 py-2 text-base leading-7 hover:bg-gray-50
-                    {% if request.path == '/member/employer/dashboard' %}text-blue-500 font-bold{% else %}text-gray-900 font-semibold{% endif %}"
-                    >Dashboard</a
+                    {{ user.first_name }} {{ user.last_name }}
+                    <span aria-hidden="true">&darr;</span>
+                  </button>
+                  <div
+                    id="mobile-dropdown-menu"
+                    class="hidden mt-2 w-40 bg-white rounded-md shadow-lg"
                   >
-                  <a
-                    href="{% url 'employer:about_us' %}"
-                    class="-mx-3 block rounded-lg px-3 py-2 text-base leading-7 hover:bg-gray-50
-                    {% if request.path == '/member/employer/about/' %}text-blue-500 font-bold{% else %}text-gray-900 font-semibold{% endif %}"
-                    >About Us</a
-                  >
-                  <a
-                    href="#"
-                    class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                    >Blog</a
-                  >
-                </div>
-                <div class="py-6 gap-5">
-                  {% if user.is_authenticated %}
-                  <div class="relative">
-                    <button
-                      id="user-mobile-dropdown"
-                      class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    <a
+                      href="#"
+                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
-                      {{ user.first_name }} {{ user.last_name }}
-                      <span aria-hidden="true">&darr;</span>
-                    </button>
-                    <div
-                      id="mobile-dropdown-menu"
-                      class="hidden mt-2 w-40 bg-white rounded-md shadow-lg"
+                      Account Details
+                    </a>
+                    <a
+                      href="{% url 'employer:signout' %}"
+                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
-                      <a
-                        href="#"
-                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        Account Details
-                      </a>
-                      <a
-                        href="{% url 'employer:signout' %}"
-                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        Sign Out
-                      </a>
-                    </div>
+                      Sign Out
+                    </a>
                   </div>
-                  {% else %}
-                  <a
-                    href="{% url 'jobseeker:home' %}"
-                    class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                    >I'm a job seeker</a
-                  >
-                  <a
-                    href="{% url 'employer:signin' %}"
-                    class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  >
-                    Sign In
-                  </a>
-                  {% endif %}
                 </div>
+                {% else %}
+                <a
+                  href="{% url 'jobseeker:home' %}"
+                  class="-mx-3 block rounded-lg px-3 py-2 text-white font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >I'm a job seeker</a
+                >
+                <a
+                  href="{% url 'employer:signin' %}"
+                  class="-mx-3 block rounded-lg px-3 py-2 text-white font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                >
+                  Sign In
+                </a>
+                {% endif %}
               </div>
             </div>
           </div>
         </div>
-      </header>
-      {% block content %} {% endblock %}
-    </div>
-    <script src="{% static 'js/main.js' %}"></script>
+      </div>
+    </header>
+    {% block content %} {% endblock %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'employer/js/main.js' %}"></script>
   </body>
 </html>
