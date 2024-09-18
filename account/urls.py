@@ -11,5 +11,5 @@ urlpatterns = [
     path("jobseeker/signin/", SigninView.as_view(), name="signin"),
     path("jobseeker/signout/", SignoutView.as_view(), name="signout"),
     path("jobseeker/find-jobs/", JobListingsView.as_view(), name="find_job"),
-    path("jobseeker/<int:id>/get-single-job/", SingleJobView.as_view(), name="get_single_job"),
+    path("jobseeker/<int:id>/get-single-job/", SingleJobView.as_view(), name="get_single_job "),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

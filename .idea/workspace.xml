@@ -5,13 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="70d40431-b3bd-4a0b-a65e-3d854d36059f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/account/static/images/arrow.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/static/account/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/account/static/account/js/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/static/css/output.css" beforeDir="false" afterPath="$PROJECT_DIR$/account/static/css/output.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/templates/jobseeker/components/desktop_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/account/templates/jobseeker/components/desktop_view.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/templates/jobseeker/components/mobile_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/account/templates/jobseeker/components/mobile_view.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/employer/static/css/output.css" beforeDir="false" afterPath="$PROJECT_DIR$/employer/static/css/output.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/account/urls.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +33,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "com.codeium.enabled": "true",
     "git-widget-placeholder": "george",
-    "last_opened_file_path": "/home/whoami/Documents/Django/globalpath",
+    "last_opened_file_path": "/home/whoami/Documents/Django/Prolue-Backend",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
